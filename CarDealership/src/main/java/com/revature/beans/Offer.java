@@ -16,6 +16,8 @@ private double price;
 private double downPayment;
 private int payments;
 private double monthlyPay;
+private int userID;
+private int vehiclesID;
 //Collection of Offers
 public static List<Offer> Offers = new ArrayList<Offer>();
 
@@ -126,6 +128,22 @@ public String toString() {
 			+ " Color=" + color + " Year=" + year + " Make=" + make + " Model=" + model 
 			+ " Price=" + balance.format(price) + " DownPayment=" + balance.format(downPayment) 
 			+ " Payments=" + payments + " MonthlyPay=" + balance.format(monthlyPay);
+}
+
+public int getUserID() {
+	return userID;
+}
+
+public void setUserID(int userID) {
+	this.userID = userID;
+}
+
+public int getVehiclesID() {
+	return vehiclesID;
+}
+
+public void setVehiclesID(int vehiclesID) {
+	this.vehiclesID = vehiclesID;
 }
 
 //Overriden toString

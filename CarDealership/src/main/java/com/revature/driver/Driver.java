@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.revature.beans.Brand;
+import com.revature.beans.Offer;
 import com.revature.beans.User;
 import com.revature.beans.Vehicle;
 import com.revature.util.DAOImp;
@@ -330,9 +331,39 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			System.out.println("\n\n\n");
 			try {
 				imp.viewOffers();
-				System.out.println("\nPress enter to go back to menu");
-	    		sc.nextLine();
-	    		
+				//Prompt employee which offer they want to accept/deny
+				System.out.println("\n Which car would you like to remove?");
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				
+				do {
+					if (input < 1 || input > Offer.Offers.size()) {
+						System.out.println("\nPlease enter a valid option");
+						input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+					}
+					else {
+						if (Validate.CheckApproveDeny("Would you like to approve or deny this offer?", "Please type approve or deny")) {
+							imp.rejectOtherOffers(Offer.Offers.get(input - 1).getUserID(), Offer.Offers.get(input - 1).getVehiclesID());
+							
+							//Once offers and Vehicles are updated, loop back to menu
+							System.out.println("\n\n\nOffers Updated!");
+							main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+							main.Display();
+							input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+							EmployeeSelector(input);
+						}
+						else {
+							imp.rejectOffer(Offer.Offers.get(input - 1).getUserID(), Offer.Offers.get(input - 1).getVehiclesID());
+							
+							//Once offers and Vehicles are updated, loop back to menu
+							System.out.println("\n\n\nOffers Updated!");
+							main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+							main.Display();
+							input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+							EmployeeSelector(input);
+						}
+					}
+				}while(input < 1 || input > Offer.Offers.size());
+				
 	    		//Loop back to menu
 	    		System.out.println("\n\n\n");
 				main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");

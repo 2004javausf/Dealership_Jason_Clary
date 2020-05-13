@@ -1,5 +1,6 @@
 package com.revature.util;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -200,7 +201,7 @@ public class DAOImp {
 		ResultSet rs=stmt.executeQuery("SELECT FIRSTNAME, LASTNAME, COLOR, YEAR, "
 						             + "(SELECT MAKE FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MAKE, "
 						             + "(SELECT MODEL FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MODEL, "
-						             + "PRICE, DOWNPAYMENT, PAYMENTS, ROUND(((PRICE - DOWNPAYMENT) / PAYMENTS),2) AS PAYAMOUNT "
+						             + "PRICE, DOWNPAYMENT, PAYMENTS, ROUND(((PRICE - DOWNPAYMENT) / PAYMENTS),2) AS PAYAMOUNT, USERS_ID, VEHICLES_ID "
 						             + "FROM OFFERS "
 						             + "JOIN users ON USERS.ID = offers.users_id "
 						             + "JOIN VEHICLES ON VEHICLES.ID = offers.vehicles_id");
@@ -208,6 +209,8 @@ public class DAOImp {
 		while(rs.next()) {			
 			car= new Offer(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),
 					         rs.getString(6),rs.getDouble(7),rs.getDouble(8),rs.getInt(9),rs.getDouble(10));
+			car.setUserID(rs.getInt(11));
+			car.setVehiclesID(rs.getInt(12));
 			Offer.Offers.add(car);
 		}
 		
@@ -243,11 +246,28 @@ public class DAOImp {
 	
 //-----------------------DELETION METHODS----------------------
 	public void deleteCar(int carID) throws SQLException{
-		//Insert into the database the new user
+		//Delete car from database
 				String sql= "DELETE FROM VEHICLES WHERE ID = ?";
 				PreparedStatement ps=conn.prepareStatement(sql);
 				ps.setInt(1, carID);		
 				ps.executeUpdate();
+	}
+	
+	public void rejectOtherOffers(int userID, int carID) throws SQLException {
+		String sql= "{ call RejectOtherPendingOffers(?,?)";
+		CallableStatement call=conn.prepareCall(sql);
+		call.setInt(1, userID);
+		call.setInt(2, carID);
+		call.execute();
+	}
+	
+	public void rejectOffer(int userID, int carID) throws SQLException {
+		//Delete offer from database
+		String sql= "DELETE FROM OFFERS WHERE USERS_ID = ? AND VEHICLES_ID = ?";
+		PreparedStatement ps=conn.prepareStatement(sql);
+		ps.setInt(1, userID);	
+		ps.setInt(2, carID);
+		ps.executeUpdate();
 	}
 //-------------------------------------------------------------
 	
