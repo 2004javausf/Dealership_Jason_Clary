@@ -36,12 +36,12 @@
 
 - [ ] As an employee, I can remove a car from the lot.
 
-- [ ] As a customer, I can view the cars that I own.
+- [x] As a customer, I can view the cars that I own.
 
-- [ ] As a customer, I can view my remaining payments for a car.
+- [x] As a customer, I can view my remaining payments for a car.
 
 - [ ] As an employee, I can view all payments.
 
-- [ ] As the system, I can calculate the monthly payment. 
+- [x] As the system, I can calculate the monthly payment. 
 ***
 
