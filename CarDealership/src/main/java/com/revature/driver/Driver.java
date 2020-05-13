@@ -169,7 +169,24 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			}
 			break;
         case 2:
-			
+        	try {
+				imp.viewGarage(user);
+				System.out.println("\nPress enter to go back to menu");
+	    		sc.nextLine();
+			} catch (SQLException e) {
+				//If fails there are no cars in the users garage
+				System.out.println("\n\n\n");
+				main = new Menu("Customer Menu", "view cars in lot", "view cars in garage", "exit");
+				main.Display();
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				CustomerSelector(input);
+			}   	
+    		
+    		System.out.println("\n\n\n");
+			main = new Menu("Customer Menu", "view cars in lot", "view cars in garage", "exit");
+			main.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+			CustomerSelector(input);
 			break;
         case 3:
 			System.exit(0);

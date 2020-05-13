@@ -25,7 +25,7 @@ public class Vehicle {
 		this.price = price;
 		this.status = status;
 	}
-	
+
 	//Getters & Setters
 	public int getId() {
 		return id;

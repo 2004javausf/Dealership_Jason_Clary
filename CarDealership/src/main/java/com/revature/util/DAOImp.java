@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.revature.beans.Offer;
 import com.revature.beans.User;
 import com.revature.beans.Vehicle;
 
@@ -155,6 +156,37 @@ public class DAOImp {
 			cars.add(car);
 		}
 		return cars;
+	}
+	
+	public void viewGarage(User user) throws SQLException {
+		//Stored cars to return 
+		Offer car = new Offer();
+				
+		//Pulls only available cars from the lot
+		Connection conn=cf.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT FIRSTNAME, LASTNAME, COLOR, YEAR, "
+						             + "(SELECT MAKE FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MAKE, "
+						             + "(SELECT MODEL FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MODEL, "
+						             + "PRICE, DOWNPAYMENT, PAYMENTS, ROUND(((PRICE - DOWNPAYMENT) / PAYMENTS),2) AS PAYAMOUNT "
+						             + "FROM OFFERS "
+						             + "JOIN users ON USERS.ID = offers.users_id "
+						             + "JOIN VEHICLES ON VEHICLES.ID = offers.vehicles_id "
+						             + "WHERE USERS.USERNAME = '"+user.getUsername()+"' "
+						             + "AND (SELECT AVAILABILITY FROM VEHICLES " 
+						             + "JOIN STATUS ON STATUS.ID = VEHICLES.STATUS_ID " 
+						             + "WHERE VEHICLES.ID = offers.vehicles_id) = 'Not Available'");
+				
+		while(rs.next()) {			
+			car= new Offer(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),
+					         rs.getString(6),rs.getDouble(7),rs.getDouble(8),rs.getInt(9),rs.getDouble(10));
+			car.Offers.add(car);
+		}
+		
+		System.out.println(car.Offers);
+		//Create menu to display the offers
+		Menu menu = new Menu("Garage", car.Offers);
+		menu.Display();	
 	}
 //-------------------------------------------------------------
 	
