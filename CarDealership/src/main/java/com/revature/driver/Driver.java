@@ -326,7 +326,26 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			}
 			break;
 		case 3:
-	
+			//Get the offers
+			System.out.println("\n\n\n");
+			try {
+				imp.viewOffers();
+				System.out.println("\nPress enter to go back to menu");
+	    		sc.nextLine();
+	    		
+	    		//Loop back to menu
+	    		System.out.println("\n\n\n");
+				main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+				main.Display();
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				EmployeeSelector(input);
+			} catch (SQLException e) {
+				System.out.println("\n\n\nThere are no current offers on vehicles");
+				main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+				main.Display();
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				EmployeeSelector(input);
+			}
 			break;
 		case 4:
 			System.exit(0);

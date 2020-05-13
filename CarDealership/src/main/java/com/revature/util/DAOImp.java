@@ -190,9 +190,9 @@ public class DAOImp {
 		menu.Display();	
 	}
 	
-	public void viewOffers(User user) throws SQLException {
+	public void viewOffers() throws SQLException {
 		//Stored cars to return 
-		Offer car = new Offer();
+		Offer car;
 				
 		//Pulls only available cars from the lot
 		Connection conn=cf.getConnection();
@@ -208,11 +208,11 @@ public class DAOImp {
 		while(rs.next()) {			
 			car= new Offer(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),
 					         rs.getString(6),rs.getDouble(7),rs.getDouble(8),rs.getInt(9),rs.getDouble(10));
-			car.Offers.add(car);
+			Offer.Offers.add(car);
 		}
 		
 		//Create menu to display the offers
-		Menu menu = new Menu("Garage", car.Offers);
+		Menu menu = new Menu("Offers", Offer.Offers);
 		menu.Display();	
 	}
 //-------------------------------------------------------------

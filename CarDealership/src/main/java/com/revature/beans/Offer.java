@@ -17,7 +17,7 @@ private double downPayment;
 private int payments;
 private double monthlyPay;
 //Collection of Offers
-public List<Offer> Offers = new ArrayList<Offer>();
+public static List<Offer> Offers = new ArrayList<Offer>();
 
 public Offer() {
 	
