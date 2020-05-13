@@ -20,7 +20,7 @@
 ## User Stories
 - [x] As a user, I can login.
 
-- [ ] As an employee, I can add a car to the lot.
+- [x] As an employee, I can add a car to the lot.
 
 - [x] As a customer, I can view the cars on the lot.
 
