@@ -11,7 +11,6 @@ public class Offer {
 private User user;
 private Vehicle vehicle;
 private double downPayment;
-private String payPlan;
 private int payments;
 //Collection of Offers
 public List<Offer> Offers = new ArrayList<Offer>();
@@ -43,14 +42,6 @@ public double getDownPayment() {
 
 public void setDownPayment(double downPayment) {
 	this.downPayment = downPayment;
-}
-
-public String getPayPlan() {
-	return payPlan;
-}
-
-public void setPayPlan(String payPlan) {
-	this.payPlan = payPlan;
 }
 
 public int getPayments() {
