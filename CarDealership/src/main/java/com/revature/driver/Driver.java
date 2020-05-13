@@ -57,7 +57,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 	//Menus Selectors
 	public static void MainSelector(int input) {
 		switch (input) {
-		case 1:
+		case 1: //LOG IN
 			try {
 				//Upon successful login will store user in an object
 				user = imp.login();
@@ -69,7 +69,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				MainSelector(input);
 			}
 			break;
-		case 2:
+		case 2://CREATE NEW USER
 			try {
 				//Upon successful login will store user in an object
 				user = imp.createUser();
@@ -81,7 +81,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				MainSelector(input);
 			}
 			break;
-		case 3:
+		case 3://EXIT
 			System.exit(0);
 			break;
 
@@ -96,7 +96,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 	
 	public static void CustomerSelector(int input) {
 		switch (input) {
-		case 1:
+		case 1:// VIEW CAR LOT
 			try {
 				System.out.println("\n\n\n");
 				//Retrieve the cars to lot and present to customer
@@ -172,7 +172,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				CustomerSelector(input);
 			}
 			break;
-        case 2:
+        case 2:// VIEW CAR GARAGE
         	try {
 				imp.viewGarage(user);
 				System.out.println("\nPress enter to go back to menu");
@@ -192,7 +192,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
 			CustomerSelector(input);
 			break;
-        case 3:
+        case 3:// EXIT
 			System.exit(0);
 			break;
 
@@ -208,7 +208,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 
 	public static void EmployeeSelector(int input) {
 		switch (input) {
-		case 1:
+		case 1:// ADD CAR
 			//Brand Object to info
 			Brand brand = new Brand();
 			
@@ -285,7 +285,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				e.printStackTrace();
 			}
 			break;
-		case 2:
+		case 2:// REMOVE CAR
 			//Get the cars
 			
 			System.out.println("\n\n\n");
@@ -326,7 +326,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				EmployeeSelector(input);
 			}
 			break;
-		case 3:
+		case 3:// APPROVE / DENY
 			//Get the offers
 			System.out.println("\n\n\n");
 			try {
@@ -378,7 +378,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				EmployeeSelector(input);
 			}
 			break;
-		case 4:
+		case 4:// EXIT
 			System.exit(0);
 			break;
 

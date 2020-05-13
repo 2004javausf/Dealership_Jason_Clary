@@ -24,28 +24,6 @@ public class DAOImp {
 	//Global menu
 	Menu menu;
 	
-//	public List<Student> getStudentList() throws SQLException {
-//		List<Student> studentList= new ArrayList<Student>();
-//		Connection conn=cf.getConnection();
-//		Statement stmt = conn.createStatement();
-//		ResultSet rs=stmt.executeQuery("SELECT * FROM STUDENT");
-//		Student s=null;
-//		while(rs.next()) {
-//			s= new Student(rs.getInt(1),rs.getString(2),rs.getInt(3));
-//			studentList.add(s);
-//		}
-//		return studentList;
-//	}
-	
-	public void createPowers(String powerName) throws SQLException {
-	//Prepared Statement- pre compiled - compiled in Java/ Statement is complied in sql
-		
-		String sql= "INSERT INTO POWERS VALUES (POWSEQ.NEXTVAL,?)";
-		PreparedStatement ps=conn.prepareStatement(sql);
-		ps.setString(1, powerName);
-		ps.executeUpdate();
-	}
-	
 //------------------------LOGIN METHODS------------------------
 	public User login() throws SQLException {
 		//Instantiate scanner
