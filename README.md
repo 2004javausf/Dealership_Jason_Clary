@@ -18,7 +18,7 @@
 **7.** A minimum of one (1) JUnit test is written to test some functionality.
 
 ## User Stories
-- [ ] As a user, I can login.
+- [x] As a user, I can login.
 
 - [ ] As an employee, I can add a car to the lot.
 
@@ -32,7 +32,7 @@
 
 - [ ] As the system, I reject all other pending offers for a car when an offer is accepted.
 
-- [ ] As a user, I can register for a customer account.
+- [x] As a user, I can register for a customer account.
 
 - [ ] As an employee, I can remove a car from the lot.
 
