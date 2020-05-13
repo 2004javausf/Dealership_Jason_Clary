@@ -101,10 +101,6 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 				//Retrieve the cars to lot and present to customer
 				lot = imp.viewCars();
 				
-				//Splits the lot arraylist for the menu
-				//String[] carLot = MenuItemConverter(lot);
-				
-				//Display Menu
 				main = new Menu("Car Lot", lot);
 				main.AddMenuItem("exit to main menu");
 				main.Display();
@@ -214,7 +210,6 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 		case 1:
 			//Brand Object to info
 			Brand brand = new Brand();
-			Vehicle car;
 			
 			//Get the brand
 			System.out.println("\n\n\n");
@@ -290,7 +285,45 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			}
 			break;
 		case 2:
+			//Get the cars
 			
+			System.out.println("\n\n\n");
+			
+			try {
+				lot = imp.viewCars();
+				
+				//display the menu after getting the cars list
+				main = new Menu("Car Lot", lot);
+				main.Display();
+				
+				//Prompt employee which car to delete
+				System.out.println("\n Which car would you like to remove?");
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				
+				do {
+					if (input < 1 || input > lot.size()) {
+						System.out.println("\nPlease enter a valid option");
+						input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+					}
+					else {
+					//Delete car if input is correct
+					imp.deleteCar(lot.get(input - 1).getId());
+					
+					//Loop back to the main menu
+					System.out.println("\n\n\nVehicle was removed");
+					main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+					main.Display();
+					input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+					EmployeeSelector(input);
+					}
+				} while(input < 1 || input > lot.size());
+			} catch (SQLException e) {
+				System.out.println("\n\n\nThe car lot is empty");
+				main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+				main.Display();
+				input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				EmployeeSelector(input);
+			}
 			break;
 		case 3:
 	

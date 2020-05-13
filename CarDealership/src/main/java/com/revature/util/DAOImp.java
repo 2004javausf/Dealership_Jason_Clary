@@ -241,6 +241,16 @@ public class DAOImp {
 	}
 //-------------------------------------------------------------
 	
+//-----------------------DELETION METHODS----------------------
+	public void deleteCar(int carID) throws SQLException{
+		//Insert into the database the new user
+				String sql= "DELETE FROM VEHICLES WHERE ID = ?";
+				PreparedStatement ps=conn.prepareStatement(sql);
+				ps.setInt(1, carID);		
+				ps.executeUpdate();
+	}
+//-------------------------------------------------------------
+	
 //------------------------BRAND METHODS------------------------
 	public void getMakes() throws SQLException {
 		//Clear the list for each iteration
