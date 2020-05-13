@@ -26,11 +26,11 @@
 
 - [x] As a customer, I can make an offer for a car.
 
-- [ ] As an employee, I can accept or reject a pending offer for a car.
+- [x] As an employee, I can accept or reject a pending offer for a car.
 
-- [ ] As the system, I update a car to an owned state when an offer is accepted.
+- [x] As the system, I update a car to an owned state when an offer is accepted.
 
-- [ ] As the system, I reject all other pending offers for a car when an offer is accepted.
+- [x] As the system, I reject all other pending offers for a car when an offer is accepted.
 
 - [x] As a user, I can register for a customer account.
 
