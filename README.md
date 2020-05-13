@@ -40,7 +40,7 @@
 
 - [x] As a customer, I can view my remaining payments for a car.
 
-- [ ] As an employee, I can view all payments.
+- [x] As an employee, I can view all payments.
 
 - [x] As the system, I can calculate the monthly payment. 
 ***
