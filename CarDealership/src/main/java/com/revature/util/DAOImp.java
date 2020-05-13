@@ -60,7 +60,7 @@ public class DAOImp {
 		String username = input.nextLine();
 		
 		//Prompt and store the username from user
-		System.out.println("What is your username?");
+		System.out.println("\nWhat is your password?");
 		String password = input.nextLine();
 		
 		//Check database for user and correct credentials
@@ -68,13 +68,13 @@ public class DAOImp {
 		ResultSet rs=stmt.executeQuery("SELECT USERS.ID, FIRSTNAME, LASTNAME, USERNAME, PASSWORD, TYPE "
 				                     + "FROM USERS "
 				                     + "JOIN USERTYPE ON usertype.id = users.usertype_id "
-				                     + "WHERE USERNAME = " + username + " AND PASSWORD = " + password);
+				                     + "WHERE USERNAME = '" + username + "' AND PASSWORD = '" + password + "'");
 		while(rs.next()) {
 			user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
 		}	
 		
 		//Close scanner and return user
-		input.close();
+		//input.close();
 		return user;
 	}
 	
@@ -130,7 +130,7 @@ public class DAOImp {
 				ps.executeUpdate();
 		
 				//Close scanner and return user
-				input.close();
+				//input.close();
 				return user;
 	}
 //-------------------------------------------------------------
@@ -155,6 +155,19 @@ public class DAOImp {
 			cars.add(car);
 		}
 		return cars;
+	}
+//-------------------------------------------------------------
+	
+//----------------------INSERTION METHODS----------------------
+	public void insertOffer(int userID, int vehID, double downPay, int payments) throws SQLException {
+		//Insert into the database the new user
+		String sql= "INSERT INTO OFFERS VALUES (?,?,?,?)";
+		PreparedStatement ps=conn.prepareStatement(sql);
+		ps.setInt(1, userID);
+		ps.setInt(2, vehID);
+		ps.setDouble(3, downPay);
+		ps.setInt(4, payments);			
+		ps.executeUpdate();
 	}
 //-------------------------------------------------------------
 }

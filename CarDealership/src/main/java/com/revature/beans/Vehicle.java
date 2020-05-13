@@ -1,5 +1,7 @@
 package com.revature.beans;
 
+import java.text.NumberFormat;
+
 public class Vehicle {
 	private int id;
 	private int year;
@@ -27,12 +29,6 @@ public class Vehicle {
 	//Getters & Setters
 	public int getId() {
 		return id;
-	}
-
-	@Override
-	public String toString() {
-		return "Vehicle [year=" + year + ", make=" + make + ", model=" + model + ", color=" + color + ", price=" + price
-				+ "]";
 	}
 
 	public void setId(int id) {
@@ -85,5 +81,11 @@ public class Vehicle {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		NumberFormat balance = NumberFormat.getCurrencyInstance();
+		return "Year=" + year + " Make=" + make + " Model=" + model + " Color=" + color + " Price=" + balance.format(price);
 	}
 }

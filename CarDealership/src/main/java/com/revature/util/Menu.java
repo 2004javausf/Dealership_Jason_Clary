@@ -28,6 +28,15 @@ public class Menu {
 			}
 		}
 		
+		public Menu(String title, List<?> menuItems) {
+			this.title = title;
+			
+			// Cycles through the user inputs to add the list
+			for (Object item : menuItems) {
+				this.menuItems.add(item.toString());
+			}
+		}
+		
 		// Adds an item to the menu list 
 		public void AddMenuItem (String item) {
 			menuItems.add(item);
