@@ -34,7 +34,7 @@
 
 - [x] As a user, I can register for a customer account.
 
-- [ ] As an employee, I can remove a car from the lot.
+- [x] As an employee, I can remove a car from the lot.
 
 - [x] As a customer, I can view the cars that I own.
 
