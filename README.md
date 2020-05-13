@@ -22,9 +22,9 @@
 
 - [ ] As an employee, I can add a car to the lot.
 
-- [ ] As a customer, I can view the cars on the lot.
+- [x] As a customer, I can view the cars on the lot.
 
-- [ ] As a customer, I can make an offer for a car.
+- [x] As a customer, I can make an offer for a car.
 
 - [ ] As an employee, I can accept or reject a pending offer for a car.
 
