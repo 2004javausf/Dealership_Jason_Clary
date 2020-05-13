@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.revature.beans.Brand;
 import com.revature.beans.User;
 import com.revature.beans.Vehicle;
 import com.revature.util.DAOImp;
@@ -41,7 +42,13 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			CustomerSelector(input);
 		}
 		else if(user.getUserType() .equalsIgnoreCase("Employee")) {
-			main = new Menu("Employee Menu", "add a car to the car lot", "remove a car to the car lot", "approve/deny offers", "exit");
+			main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+			
+			//Put menu to console
+			System.out.println("\n\n\n");
+			main.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+			EmployeeSelector(input);
 		}
 		else {System.out.println("Don't know how you got here bud.");}		
 	}
@@ -159,7 +166,7 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 						CustomerSelector(input);
 					}
 				}
-				} while(input < 0 || input > lot.size());
+				} while(input < 1 || input > lot.size());
 			} catch (SQLException e) {
 				//If log in failed prompt the user and rerun from beginning
 				System.out.println("\n\n\nCar lot is empty");
@@ -193,6 +200,111 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 			break;
 
 		default:
+			System.out.println("\n\n\nPlease select a valid option");
+			main = new Menu("Customer Menu", "view cars in lot", "view cars in garage", "exit");
+			main.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+			CustomerSelector(input);
+			break;
+		}
+	}
+
+	public static void EmployeeSelector(int input) {
+		switch (input) {
+		case 1:
+			//Brand Object to info
+			Brand brand = new Brand();
+			Vehicle car;
+			
+			//Get the brand
+			System.out.println("\n\n\n");
+			try {
+				imp.getMakes();
+				
+				System.out.println("\nSelect a make");
+				input= Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				
+				//If the user puts in faulty input will loop
+				do {
+				if (input < 1 || input > Brand.Makes.size()) {
+					System.out.println("\nPlease enter a valid option");
+					input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+				}
+				else {
+					//If the input is correct will store brand in object and continue
+					brand.setMake(Brand.Makes.get(input - 1));
+					
+					//Get the models
+					System.out.println("\n\n\n");
+					imp.getModels(brand.getMake());
+					
+					System.out.println("\nSelect a model");
+					input= Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+					
+					//If the user puts in faulty input will loop
+					do {
+						if (input < 1 || input > Brand.Models.size()) {
+							System.out.println("\nPlease enter a valid option");
+							input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+						}
+						else {
+							//If the input is correct will store brand in object and continue
+							brand.setId(Brand.IDs.get(input - 1));
+							brand.setModel(Brand.Makes.get(input - 1));
+							
+							//Get year of car
+							System.out.println("\nWhat year is the vehicle/");
+							int year = 0; 
+							while (year < 1) {
+								year = Validate.CheckInt(sc.nextLine(), "Please enter a whole number greater than 0");	
+							}
+
+							//Get color of car
+							System.out.println("\nWhat color is the vehicle/");
+							String color = sc.nextLine();
+							
+							//Get price of car
+							System.out.println("\nWhat price is the vehicle/");
+							double price = 0; 
+							while (price < 1) {
+								price = Validate.CheckDouble(sc.nextLine(), "Please enter a double greater than 0");	
+							}
+							
+							//Insert the car into the database
+							imp.insertVehicle(year, brand.getId(), color, price);
+							
+							//Return to the employee menu
+							System.out.println("\n\n\nVehicle Created!");
+							main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+							main.Display();
+							input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+							EmployeeSelector(input);
+						}
+					} while(input < 1 || input > Brand.Models.size());
+				}
+				} while(input < 1 || input > Brand.Makes.size());
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			
+			break;
+		case 3:
+	
+			break;
+		case 4:
+			System.exit(0);
+			break;
+
+		default:
+			System.out.println("\n\n\nPlease select a valid option");
+			main = new Menu("Employee Menu", "add a car to the car lot", "remove a car from the car lot", "approve/deny offers", "exit");
+			main.Display();
+			input = Validate.CheckInt(sc.nextLine(), "Please use a whole number format");
+			EmployeeSelector(input);
 			break;
 		}
 	}
@@ -214,5 +326,4 @@ static List<Vehicle> lot = new ArrayList<Vehicle>();
 		}
 	}
 	
-
 }

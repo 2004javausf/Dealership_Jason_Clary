@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.revature.beans.Brand;
 import com.revature.beans.Offer;
 import com.revature.beans.User;
 import com.revature.beans.Vehicle;
@@ -188,6 +189,32 @@ public class DAOImp {
 		Menu menu = new Menu("Garage", car.Offers);
 		menu.Display();	
 	}
+	
+	public void viewOffers(User user) throws SQLException {
+		//Stored cars to return 
+		Offer car = new Offer();
+				
+		//Pulls only available cars from the lot
+		Connection conn=cf.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT FIRSTNAME, LASTNAME, COLOR, YEAR, "
+						             + "(SELECT MAKE FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MAKE, "
+						             + "(SELECT MODEL FROM VEHICLES JOIN vehiclebrand ON vehiclebrand.id = vehicles.brand_id WHERE VEHICLES.ID = offers.vehicles_id) AS MODEL, "
+						             + "PRICE, DOWNPAYMENT, PAYMENTS, ROUND(((PRICE - DOWNPAYMENT) / PAYMENTS),2) AS PAYAMOUNT "
+						             + "FROM OFFERS "
+						             + "JOIN users ON USERS.ID = offers.users_id "
+						             + "JOIN VEHICLES ON VEHICLES.ID = offers.vehicles_id");
+				
+		while(rs.next()) {			
+			car= new Offer(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),
+					         rs.getString(6),rs.getDouble(7),rs.getDouble(8),rs.getInt(9),rs.getDouble(10));
+			car.Offers.add(car);
+		}
+		
+		//Create menu to display the offers
+		Menu menu = new Menu("Garage", car.Offers);
+		menu.Display();	
+	}
 //-------------------------------------------------------------
 	
 //----------------------INSERTION METHODS----------------------
@@ -201,5 +228,58 @@ public class DAOImp {
 		ps.setInt(4, payments);			
 		ps.executeUpdate();
 	}
+	
+	public void insertVehicle(int year, int brandID, String color, double price) throws SQLException {
+		//Insert into the database the new user
+		String sql= "INSERT INTO VEHICLES VALUES (VEHICLES_SEQ.NEXTVAL + 5,?,?,?,?,1)";
+		PreparedStatement ps=conn.prepareStatement(sql);
+		ps.setString(1, "" + year);
+		ps.setInt(2, brandID);
+		ps.setString(3, color);
+		ps.setDouble(4, price);
+		ps.executeUpdate();
+	}
+//-------------------------------------------------------------
+	
+//------------------------BRAND METHODS------------------------
+	public void getMakes() throws SQLException {
+		//Clear the list for each iteration
+				Brand.Makes.clear();
+				
+				//Pulls only available cars from the lot
+				Connection conn=cf.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs=stmt.executeQuery("SELECT UNIQUE MAKE "
+						                     + "FROM VEHICLEBRAND");
+						
+				while(rs.next()) {			
+					Brand.Makes.add(rs.getString(1));
+				}
+				
+				//Create menu to display the offers
+				Menu menu = new Menu("Makes", Brand.Makes);
+				menu.Display();	
+	}
+	
+	public void getModels(String make) throws SQLException {
+		//Clear the list for each iteration
+		Brand.Models.clear();
+		
+		//Pulls only available cars from the lot
+		Connection conn=cf.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT ID, MODEL "
+				                     + "FROM VEHICLEBRAND "
+				                     + "WHERE MAKE = '"+make+"'");
+				
+		while(rs.next()) {
+			Brand.IDs.add(rs.getInt(1));
+			Brand.Models.add(rs.getString(2));
+		}
+		
+		//Create menu to display the offers
+		Menu menu = new Menu("Models", Brand.Models);
+		menu.Display();	
+}
 //-------------------------------------------------------------
 }
