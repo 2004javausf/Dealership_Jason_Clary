@@ -13,9 +13,26 @@ public class Vehicle {
 		super();
 	}
 	
+	public Vehicle(int id, int year, String make, String model, String color, double price, String status) {
+		super();
+		this.id = id;
+		this.year = year;
+		this.make = make;
+		this.model = model;
+		this.color = color;
+		this.price = price;
+		this.status = status;
+	}
+	
 	//Getters & Setters
 	public int getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [year=" + year + ", make=" + make + ", model=" + model + ", color=" + color + ", price=" + price
+				+ "]";
 	}
 
 	public void setId(int id) {

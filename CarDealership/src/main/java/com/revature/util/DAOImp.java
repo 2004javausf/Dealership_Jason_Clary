@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.revature.beans.User;
+import com.revature.beans.Vehicle;
 
 public class DAOImp {
 	//Global Variable for Connection
@@ -15,7 +18,8 @@ public class DAOImp {
 	Connection conn= cf.getConnection();
 	//Global scanner for input
 	Scanner input;
-	
+	//Global menu
+	Menu menu;
 	
 //	public List<Student> getStudentList() throws SQLException {
 //		List<Student> studentList= new ArrayList<Student>();
@@ -39,6 +43,7 @@ public class DAOImp {
 		ps.executeUpdate();
 	}
 	
+//------------------------LOGIN METHODS------------------------
 	public User login() throws SQLException {
 		//Instantiate scanner
 		input = new Scanner(System.in);
@@ -47,8 +52,8 @@ public class DAOImp {
 		User user = new User();
 		
 		//Create a menu and display for login
-		Menu loginMenu = new Menu("Login");
-		loginMenu.Display();
+		menu = new Menu("Login");
+		menu.Display();
 		
 		//Prompt and store the username from user
 		System.out.println("What is your username?");
@@ -81,8 +86,8 @@ public class DAOImp {
 		User user = new User();
 		
 		//Create a menu and display for login
-		Menu loginMenu = new Menu("Sign up");
-		loginMenu.Display();
+		menu = new Menu("Sign up");
+		menu.Display();
 		
 		//Prompt and store the first name from user
 		System.out.println("What is your first name?");
@@ -128,4 +133,28 @@ public class DAOImp {
 				input.close();
 				return user;
 	}
+//-------------------------------------------------------------
+	
+//-----------------------CAR VIEW METHODS----------------------
+	public List<Vehicle> viewCars() throws SQLException {
+		//Stored cars to return 
+		List<Vehicle> cars= new ArrayList<Vehicle>();
+		Vehicle car;
+		
+		//Pulls only available cars from the lot
+		Connection conn=cf.getConnection();
+		Statement stmt = conn.createStatement();
+		ResultSet rs=stmt.executeQuery("SELECT VEHICLES.ID, YEAR, MAKE, MODEL, COLOR, PRICE, AVAILABILITY "
+				                     + "FROM VEHICLES "
+				                     + "JOIN VEHICLEBRAND ON vehiclebrand.id = vehicles.brand_id "
+				                     + "JOIN STATUS ON status.id = vehicles.status_id "
+				                     + "WHERE AVAILABILITY = 'Available'");
+		
+		while(rs.next()) {
+			car= new Vehicle(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getDouble(6),rs.getString(7));
+			cars.add(car);
+		}
+		return cars;
+	}
+//-------------------------------------------------------------
 }
